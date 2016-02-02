@@ -16,7 +16,7 @@ import ThemeDecorator from 'material-ui/lib/styles/theme-decorator';
   state => ({
     open: state.nabu.getIn (['translator', 'isOpen'])
   }), null, null, {pure: true})
-export default class NabuTranslatorPanel extends Component {
+class NabuTranslatorPanel extends Component {
 
   render() {
     const {open} = this.props;
@@ -28,3 +28,5 @@ export default class NabuTranslatorPanel extends Component {
     )
   }
 }
+
+module.exports = NabuTranslatorPanel;

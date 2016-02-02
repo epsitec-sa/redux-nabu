@@ -25,7 +25,7 @@ import ThemeDecorator from 'material-ui/lib/styles/theme-decorator';
     marker: state.nabu.get ('marker'),
     locale: state.nabu.get ('locale')
   }), null, null, {pure: true})
-export default class NabuTranslator extends Component {
+class NabuTranslator extends Component {
   render () {
     const {dispatch, locale, translator, marker, store} = this.props;
     const setLocale = (e, index, value) => dispatch ({type: 'NABU_CHANGE_LOCALE',locale: value});
@@ -55,3 +55,5 @@ export default class NabuTranslator extends Component {
     )
   }
 }
+
+module.exports = NabuTranslator;
