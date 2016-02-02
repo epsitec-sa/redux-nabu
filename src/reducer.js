@@ -1,21 +1,7 @@
 'use strict';
-const { Map, Set, fromJS } = require ('immutable');
+const initialNabu = require ('./initialState.js');
 
-const initialIntl = Map (fromJS ({
-  locale: 'en_US',
-  nabuGen: 0,
-  marker: false,
-  translator: Map (fromJS ({
-    isOpen: false,
-    table: Set ()
-  })),
-  en_US: Map (fromJS ({})),
-  fr_CH: Map (fromJS ({})),
-  de_CH: Map (fromJS ({}))
-}));
-
-
-function nabuReducer (state = initialIntl, action = {}) {
+function nabuReducer (state = initialNabu, action = {}) {
   switch (action.type) {
     case 'NABU_CHANGE_LOCALE': {
       return state
