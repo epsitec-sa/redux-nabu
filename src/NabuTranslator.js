@@ -10,7 +10,7 @@ import DropDownMenu from 'material-ui/lib/DropDownMenu';
 import MenuItem from 'material-ui/lib/menus/menu-item';
 import Toggle from 'material-ui/lib/toggle';
 
-import NabuTable from './NabuTable.jsx';
+import NabuTable from './NabuTable.js';
 
 //THEME
 import theme from './nabu-theme.js';

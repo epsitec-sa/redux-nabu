@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import LeftNav from 'material-ui/lib/left-nav';
 
-import NabuTranslator from './NabuTranslator.jsx';
+import NabuTranslator from './NabuTranslator.js';
 
 //THEME
 import theme from './nabu-theme.js';

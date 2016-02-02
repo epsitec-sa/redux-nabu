@@ -8,7 +8,7 @@ import TableRow from 'material-ui/lib/table/table-row';
 import TableHeader from 'material-ui/lib/table/table-header';
 import TableBody from 'material-ui/lib/table/table-body';
 
-import NabuRow from './NabuRow.jsx';
+import NabuRow from './NabuRow.js';
 
 @connect (
   state => ({
