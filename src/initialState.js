@@ -1,7 +1,6 @@
 'use strict';
 const { Map, Set, fromJS } = require ('immutable');
-
-model.exports = Map (fromJS ({
+const state = Map (fromJS ({
   locale: 'en_US',
   nabuGen: 0,
   marker: false,
@@ -13,3 +12,5 @@ model.exports = Map (fromJS ({
   fr_CH: Map (fromJS ({})),
   de_CH: Map (fromJS ({}))
 }));
+
+module.exports = state;

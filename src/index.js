@@ -48,7 +48,7 @@ module.exports = {
   nabuReducer: require ('./reducer.js'),
   NabuTranslator: require ('./NabuTranslator.js'),
   NabuTranslatorPanel: require ('./NabuTranslatorPanel.js'),
-  NabuText: require ('./NabuText.js'),
+  T: require ('./NabuText.js'),
   NabuProvide: IntlProvider,
-  initialState: require ('./initialState')
+  initialState: require ('./initialState.js')
 };
