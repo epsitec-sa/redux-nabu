@@ -1,7 +1,7 @@
 {
   "name": "redux-nabu",
   "version": "0.1.0",
-  "description": "i18n tools for react",
+  "description": "i18n backend for react-tools",
   "main": "lib/index.js",
   "scripts": {
     "prepublish": "babel src --out-dir lib",
@@ -25,14 +25,7 @@
   },
   "homepage": "https://github.com/epsitec-sa/redux-nabu#readme",
   "dependencies": {
-    "material-ui": "^0.14.3",
-    "ramda": "^0.19.1",
-    "react": "^0.14.7",
-    "react-dom": "^0.14.7",
-    "react-intl": "^2.0.0-beta-2",
-    "react-redux": "^4.2.0",
-    "react-tap-event-plugin": "^0.2.2",
-    "redux": "^3.2.0"
+    "ramda": "^0.19.1"
   },
   "devDependencies": {
     "babel-cli": "^6.4.5",

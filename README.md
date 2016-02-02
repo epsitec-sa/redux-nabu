@@ -1,3 +1,3 @@
 # redux-nabu
 
-i18n tools for your react app.
+i18n reducer for react-nabu tools
