@@ -98,4 +98,4 @@ class NabuText extends Component {
   }
 }
 
-export default injectIntl (NabuText);
+module.exports = injectIntl (NabuText);
