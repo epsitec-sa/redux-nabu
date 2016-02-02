@@ -38,7 +38,7 @@ module.exports = {
   toggleMarker: toggleMarker,
   toggleTranslatorPanel: toggleTranslatorPanel,
   nabuReducer: require ('./reducer.js'),
-  NabuTranslator: require ('./NabuTranslator.jsx'),
-  NabuTranslatorPanel: require ('./NabuTranslatorPanel.jsx'),
-  NabuText: require ('./NabuText.jsx')
+  NabuTranslator: require ('./NabuTranslator.js'),
+  NabuTranslatorPanel: require ('./NabuTranslatorPanel.js'),
+  NabuText: require ('./NabuText.js')
 };
