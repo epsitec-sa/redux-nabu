@@ -1,5 +1,4 @@
 'use strict';
-import env from '../../../config/env';
 import React, {Component, PropTypes}  from 'react';
 import { connect } from 'react-redux';
 
