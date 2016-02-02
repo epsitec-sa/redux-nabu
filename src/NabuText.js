@@ -1,9 +1,7 @@
 'use strict';
-import env from '../../../config/env';
 import React, {Component, PropTypes}  from 'react';
 import {injectIntl} from 'react-intl';
 import { connect } from 'react-redux';
-import { connectTheme } from 'redux-theme';
 import Badge from 'material-ui/lib/badge';
 
 
