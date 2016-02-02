@@ -1,4 +1,5 @@
 'use strict';
+import { IntlProvider } from 'react-intl';
 const curry = require ('ramda').curry;
 const merge = require ('ramda').merge;
 
@@ -40,5 +41,6 @@ module.exports = {
   nabuReducer: require ('./reducer.js'),
   NabuTranslator: require ('./NabuTranslator.js'),
   NabuTranslatorPanel: require ('./NabuTranslatorPanel.js'),
-  NabuText: require ('./NabuText.js')
+  NabuText: require ('./NabuText.js'),
+  NabuProvide: IntlProvider
 };
