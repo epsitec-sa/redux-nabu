@@ -37,5 +37,6 @@ module.exports = {
   addMessage: addMessage,
   toggleMarker: toggleMarker,
   toggleTranslatorPanel: toggleTranslatorPanel,
-  initialState: require ('./initialState.js')
+  initialState: require ('./initialState.js'),
+  nabuReducer: require ('./reducer.js')
 };
