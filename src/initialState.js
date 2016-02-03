@@ -1,12 +1,14 @@
 'use strict';
-const { Map, Set, fromJS } = require ('immutable');
+
+const {Map, Set, fromJS} = require ('immutable');
+
 const state = Map (fromJS ({
-  locale: 'en_US',
+  locale:  'en_US',
   nabuGen: 0,
-  marker: false,
+  marker:  false,
   translator: Map (fromJS ({
     isOpen: false,
-    table: Set ()
+    table:  Set ()
   })),
   en_US: Map (fromJS ({})),
   fr_CH: Map (fromJS ({})),
