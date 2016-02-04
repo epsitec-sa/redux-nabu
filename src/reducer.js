@@ -1,5 +1,7 @@
 'use strict';
 
+const {fromJS} = require ('immutable');
+
 const initialNabu = require ('./initialState.js');
 
 function nabuReducer (state = initialNabu, action = {}) {
