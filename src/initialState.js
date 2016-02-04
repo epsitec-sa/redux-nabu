@@ -8,7 +8,7 @@ const state = fromJS ({
   marker:  false,
   translator: fromJS ({
     isOpen: false,
-    table:  Set ()
+    tableSize: 0
   }),
   en_US: fromJS ({}),
   fr_CH: fromJS ({}),

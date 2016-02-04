@@ -14,10 +14,12 @@ function nabuReducer (state = initialNabu, action = {}) {
     let newGen = state.get ('nabuGen');
     newGen++;
     let message = state.getIn ([action.locale, action.messageId]);
-    message.defaultMessage = action.value;
-    message.translated = !!action.value;
+    console.dir (message);
+    const newMessage = message.withMutations ( (map) => {
+      map.set ('defaultMessage', action.value).set ('translated', !!action.value);
+    });
     return state
-      .setIn ([action.locale, action.messageId], message)
+      .setIn ([action.locale, action.messageId], newMessage)
       .set ('nabuGen', newGen);
   }
 
@@ -32,25 +34,30 @@ function nabuReducer (state = initialNabu, action = {}) {
   }
 
   case 'NABU_ADD_MESSAGE': {
+    let size = state.getIn (['en_US']).size;
+    if (!state.hasIn (['en_US', action.messageId])) {
+      size++;
+    }
     return state
-      .setIn (['en_US', action.messageId], {
+      .setIn (['en_US', action.messageId], fromJS ({
         id:             action.messageId,
         defaultMessage: action.messageId,
         description:    action.description,
         translated:     false
-      })
-      .setIn (['fr_CH', action.messageId], {
+      }))
+      .setIn (['fr_CH', action.messageId], fromJS ({
         id:             action.messageId,
         defaultMessage: action.messageId,
         description:    action.description,
         translated:     false
-      })
-      .setIn (['de_CH', action.messageId], {
+      }))
+      .setIn (['de_CH', action.messageId], fromJS ({
         id:             action.messageId,
         defaultMessage: action.messageId,
         description:    action.description,
         translated:     false
-      });
+      }))
+      .setIn (['translator','tableSize'], size);
   }
   }
   return state;
