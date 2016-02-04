@@ -31,16 +31,6 @@ function nabuReducer (state = initialNabu, action = {}) {
     return state.setIn (['translator','isOpen'], newState);
   }
 
-  case 'NABU_ADD_IN_TABLE': {
-    const table = state.getIn (['translator','table']);
-    return state.setIn (['translator','table'], table.add (action.messageId));
-  }
-
-  case 'NABU_CLEAR_TABLE': {
-    const table = state.getIn (['translator','table']);
-    return state.setIn (['translator','table'], table.clear ());
-  }
-
   case 'NABU_ADD_MESSAGE': {
     return state
       .setIn (['en_US', action.messageId], {
