@@ -42,9 +42,8 @@ module.exports = {
   addMessage:            addMessage,
   toggleMarker:          toggleMarker,
   toggleTranslatorPanel: toggleTranslatorPanel,
-<<<<<<< HEAD
-  initialState: require ('./initialState.js'),
-  nabuReducer: require ('./reducer.js'),
+  initialState:          require ('./initialState.js'),
+  nabuReducer:           require ('./reducer.js'),
   T: (store) => {
     return (msgid, values, desc) => {
       const state = store.getState ();
@@ -68,8 +67,4 @@ module.exports = {
       return text;
     };
   }
-=======
-  initialState:          require ('./initialState.js'),
-  nabuReducer:           require ('./reducer.js')
->>>>>>> 35a4d25f6909b75cce3cdb2e2e3c5390cfd60829
 };
