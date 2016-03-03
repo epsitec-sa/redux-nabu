@@ -2,7 +2,10 @@
 
 const curry = require ('ramda').curry;
 const merge = require ('ramda').merge;
-const formatMessage = require('format-message');
+if (!global.Intl) {
+    require ('intl');
+}
+const IntlMessageFormat = require('intl-formatmessage');
 // Base action creator
 const createCommand = command => ({type: command});
 const setPayload    = (action, payload) => merge (action, payload);
@@ -60,7 +63,9 @@ module.exports = {
           description: desc
       };
       const markerOn = mustTranslate (messages, msgid) && marker;
-      let text = formatMessage (messages.get (msgid, fallbackMessage), values, state.nabu.get ('locale'));
+      const msg = messages.get (msgid, fallbackMessage).msgid;
+      const message = new IntlMessageFormat (msg, state.nabu.get ('locale'));
+      let text = message.format (values);
       if (markerOn) {
         text = '#' + text + '#';
       }

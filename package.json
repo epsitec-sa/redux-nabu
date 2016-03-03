@@ -1,6 +1,6 @@
 {
   "name": "redux-nabu",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "description": "i18n backend for react-tools",
   "main": "lib/index.js",
   "scripts": {
@@ -28,6 +28,8 @@
   "dependencies": {
     "format-message": "^4.0.0",
     "immutable": "^3.7.6",
+    "intl": "^1.1.0",
+    "intl-messageformat": "^1.2.0",
     "ramda": "^0.19.1"
   },
   "devDependencies": {
