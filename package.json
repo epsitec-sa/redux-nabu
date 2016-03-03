@@ -1,6 +1,6 @@
 {
   "name": "redux-nabu",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "i18n backend for react-tools",
   "main": "lib/index.js",
   "scripts": {
@@ -26,6 +26,7 @@
   },
   "homepage": "https://github.com/epsitec-sa/redux-nabu#readme",
   "dependencies": {
+    "format-message": "^4.0.0",
     "immutable": "^3.7.6",
     "ramda": "^0.19.1"
   },
