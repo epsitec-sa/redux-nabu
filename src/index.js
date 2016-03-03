@@ -5,7 +5,7 @@ const merge = require ('ramda').merge;
 if (!global.Intl) {
     require ('intl');
 }
-const IntlMessageFormat = require('intl-formatmessage');
+const IntlMessageFormat = require('intl-messageformat');
 // Base action creator
 const createCommand = command => ({type: command});
 const setPayload    = (action, payload) => merge (action, payload);
