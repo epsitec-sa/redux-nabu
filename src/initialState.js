@@ -1,16 +1,18 @@
 'use strict';
-const { Map, Set, fromJS } = require ('immutable');
-const state = Map (fromJS ({
-  locale: 'en_US',
+
+const {Map, Set, fromJS} = require ('immutable');
+
+const state = fromJS ({
+  locale:  'en_US',
   nabuGen: 0,
-  marker: false,
-  translator: Map (fromJS ({
+  marker:  false,
+  translator: fromJS ({
     isOpen: false,
-    table: Set ()
-  })),
-  en_US: Map (fromJS ({})),
-  fr_CH: Map (fromJS ({})),
-  de_CH: Map (fromJS ({}))
-}));
+    tableSize: 0
+  }),
+  en_US: fromJS ({}),
+  fr_CH: fromJS ({}),
+  de_CH: fromJS ({})
+});
 
 module.exports = state;

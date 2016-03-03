@@ -1,29 +1,27 @@
 'use strict';
+
 const curry = require ('ramda').curry;
 const merge = require ('ramda').merge;
 const formatMessage = require('format-message');
 // Base action creator
-const createCommand = (command) => ({type: command});
-const setPayload = (action, payload) => merge (action, payload);
+const createCommand = command => ({type: command});
+const setPayload    = (action, payload) => merge (action, payload);
 
-const createAction = curry (
-  (command, payload) => setPayload (createCommand (command), payload)
-);
-
+const createAction = curry ((command, payload) => setPayload (createCommand (command), payload));
 
 // Nabu actions
-const changeLocale = (l) => createAction('NABU_CHANGE_LOCALE', {
+const changeLocale = l => createAction ('NABU_CHANGE_LOCALE', {
   locale: l
 });
 
 const translate = (l, m, v) => createAction ('NABU_TRANSLATE', {
-  locale: l,
+  locale:    l,
   messageId: m,
-  value: v
+  value:     v
 });
 
 const addMessage = (m, d) => createAction ('NABU_ADD_MESSAGE', {
-  messageId: m,
+  messageId:   m,
   description: d
 });
 
@@ -39,11 +37,12 @@ const mustTranslate = (messages, msgid) => {
 };
 // API
 module.exports = {
-  changeLocale: changeLocale,
-  translate: translate,
-  addMessage: addMessage,
-  toggleMarker: toggleMarker,
+  changeLocale:          changeLocale,
+  translate:             translate,
+  addMessage:            addMessage,
+  toggleMarker:          toggleMarker,
   toggleTranslatorPanel: toggleTranslatorPanel,
+<<<<<<< HEAD
   initialState: require ('./initialState.js'),
   nabuReducer: require ('./reducer.js'),
   T: (store) => {
@@ -69,4 +68,8 @@ module.exports = {
       return text;
     };
   }
+=======
+  initialState:          require ('./initialState.js'),
+  nabuReducer:           require ('./reducer.js')
+>>>>>>> 35a4d25f6909b75cce3cdb2e2e3c5390cfd60829
 };
