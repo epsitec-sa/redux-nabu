@@ -41,18 +41,21 @@ function nabuReducer (state = initialNabu, action = {}) {
       .setIn (['en_US', action.messageId], fromJS ({
         id:             action.messageId,
         defaultMessage: action.messageId,
+        default:        action.messageId,
         description:    action.description,
         translated:     false
       }))
       .setIn (['fr_CH', action.messageId], fromJS ({
         id:             action.messageId,
         defaultMessage: action.messageId,
+        default:        action.messageId,
         description:    action.description,
         translated:     false
       }))
       .setIn (['de_CH', action.messageId], fromJS ({
         id:             action.messageId,
         defaultMessage: action.messageId,
+        default:        action.messageId,
         description:    action.description,
         translated:     false
       }))

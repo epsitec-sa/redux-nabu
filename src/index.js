@@ -56,11 +56,11 @@ module.exports = {
       const marker = state.nabu.get ('marker');
       const fallbackMessage = {
           id: msgid,
-          defaultMessage: msgid,
+          default: msgid,
           description: desc
       };
       const markerOn = mustTranslate (messages, msgid) && marker;
-      let text = formatMessage (messages.get (msgid, fallbackMessage), values);
+      let text = formatMessage (messages.get (msgid, fallbackMessage), values, state.nabu.get ('locale'));
       if (markerOn) {
         text = '#' + text + '#';
       }
