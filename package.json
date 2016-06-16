@@ -28,7 +28,6 @@
   "dependencies": {
     "format-message": "^4.0.0",
     "immutable": "^3.7.6",
-    "intl": "^1.1.0",
     "intl-messageformat": "^1.2.0",
     "ramda": "^0.19.1"
   },
@@ -45,5 +44,8 @@
     "mocha": "^2.4.5",
     "react": "^0.14.7",
     "rimraf": "^2.5.1"
+  },
+  "peerDependencies": {
+    "intl": "^1.1.0"
   }
 }
