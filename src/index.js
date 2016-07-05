@@ -64,12 +64,12 @@ const T = (store) => {
 
 // API
 module.exports = {
+  initialState: require ('./initial-state.js'),
+  nabuReducer:  require ('./reducer.js'),
   changeLocale,
   translate,
   addMessage,
   toggleMarker,
   toggleTranslatorPanel,
-  initialState: require ('./initial-state.js'),
-  nabuReducer:  require ('./reducer.js'),
   T
 };
