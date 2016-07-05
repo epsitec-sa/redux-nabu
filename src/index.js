@@ -2,10 +2,13 @@
 
 const curry = require ('ramda').curry;
 const merge = require ('ramda').merge;
+
 if (!global.Intl) {
-    require ('intl');
+  require ('intl');
 }
-const IntlMessageFormat = require('intl-messageformat');
+
+const IntlMessageFormat = require ('intl-messageformat');
+
 // Base action creator
 const createCommand = command => ({type: command});
 const setPayload    = (action, payload) => merge (action, payload);
@@ -38,6 +41,7 @@ const mustTranslate = (messages, msgid) => {
   }
   return !messages.getIn ([msgid, 'translated']);
 };
+
 // API
 module.exports = {
   changeLocale:          changeLocale,
