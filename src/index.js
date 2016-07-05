@@ -49,7 +49,7 @@ const mustTranslate = (messages, msgid) => {
 const T = (store) => {
   return (msgid, values, desc) => {
     const state = store.getState ();
-    const messages = state.nabu.get (state.nabu.get ('locale'));
+    const messages = state.nabu.getIn (['translations', state.nabu.get ('locale')]);
     const mustAdd = !messages.has (msgid);
     if (mustAdd) {
       store.dispatch (addMessage (msgid, desc));
