@@ -7,7 +7,7 @@ import {translate, changeLocale, addMessage} from '../src/index.js';
 describe ('ReducerSpec -> actions', () => {
   it ('actions checkup', () => {
     const translateAction = translate (1, 2, 3);
-    const changeLocaleAction = changeLocale ('fr_CH');
+    const changeLocaleAction = changeLocale ('fr-CH');
     const addMessageAction = addMessage (1, 2);
 
     expect (translateAction).to.eql ({
@@ -19,7 +19,7 @@ describe ('ReducerSpec -> actions', () => {
 
     expect (changeLocaleAction).to.eql ({
       type: 'NABU_CHANGE_LOCALE',
-      locale: 'fr_CH'
+      locale: 'fr-CH'
     });
 
     expect (addMessageAction).to.eql ({
