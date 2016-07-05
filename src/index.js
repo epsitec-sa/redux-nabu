@@ -42,6 +42,26 @@ const mustTranslate = (messages, msgid) => {
   return !messages.getIn ([msgid, 'translated']);
 };
 
+const T = (store) => {
+  return (msgid, values, desc) => {
+    const state = store.getState ();
+    const messages = state.nabu.get (state.nabu.get ('locale'));
+    const mustAdd = !messages.has (msgid);
+    if (mustAdd) {
+      store.dispatch (addMessage (msgid, desc));
+    }
+    const marker = state.nabu.get ('marker');
+    const markerOn = mustTranslate (messages, msgid) && marker;
+    const msg = messages.getIn ([msgid, 'defaultMessage'], msgid);
+    const message = new IntlMessageFormat (msg, state.nabu.get ('locale'));
+    let text = message.format (values);
+    if (markerOn) {
+      text = '#' + text + '#';
+    }
+    return text;
+  };
+};
+
 // API
 module.exports = {
   changeLocale,
@@ -51,23 +71,5 @@ module.exports = {
   toggleTranslatorPanel,
   initialState: require ('./initial-state.js'),
   nabuReducer:  require ('./reducer.js'),
-  T: (store) => {
-    return (msgid, values, desc) => {
-      const state = store.getState ();
-      const messages = state.nabu.get (state.nabu.get ('locale'));
-      const mustAdd = !messages.has (msgid);
-      if (mustAdd) {
-        store.dispatch (addMessage (msgid, desc));
-      }
-      const marker = state.nabu.get ('marker');
-      const markerOn = mustTranslate (messages, msgid) && marker;
-      const msg = messages.getIn ([msgid, 'defaultMessage'], msgid);
-      const message = new IntlMessageFormat (msg, state.nabu.get ('locale'));
-      let text = message.format (values);
-      if (markerOn) {
-        text = '#' + text + '#';
-      }
-      return text;
-    };
-  }
+  T
 };
