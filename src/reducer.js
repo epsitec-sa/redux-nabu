@@ -23,12 +23,12 @@ function nabuReducer (state = initialNabu, action = {}) {
     }
 
     case 'NABU_TOGGLE_MARKS': {
-      let newState = !state.get ('marker');
+      const newState = !state.get ('marker');
       return state.set ('marker', newState);
     }
 
     case 'NABU_TOGGLE_TRANSLATOR': {
-      let newState = !state.getIn (['translator','isOpen']);
+      const newState = !state.getIn (['translator','isOpen']);
       return state.setIn (['translator','isOpen'], newState);
     }
 
