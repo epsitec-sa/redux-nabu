@@ -12,13 +12,13 @@ function nabuReducer (state = initialNabu, action = {}) {
 
     case 'NABU_TRANSLATE': {
       const newGen = state.get ('nabuGen') + 1;
-      const message = state.getIn ([action.locale, action.messageId]);
+      const message = state.getIn (['translations', action.locale, action.messageId]);
       const newMessage = message.withMutations (map => {
         map.set ('defaultMessage', action.value).set ('translated', !!action.value);
       });
 
       return state
-        .setIn ([action.locale, action.messageId], newMessage)
+        .setIn (['translations', action.locale, action.messageId], newMessage)
         .set ('nabuGen', newGen);
     }
 
@@ -28,37 +28,34 @@ function nabuReducer (state = initialNabu, action = {}) {
     }
 
     case 'NABU_TOGGLE_TRANSLATOR': {
-      const newState = !state.getIn (['translator','isOpen']);
-      return state.setIn (['translator','isOpen'], newState);
+      const newState = !state.getIn (['translator', 'isOpen']);
+      return state.setIn (['translator', 'isOpen'], newState);
+    }
+
+    case 'NABU_ADD_LOCALE': {
+      const defLocale = state.get ('defaultLocale');
+      const def = state.getIn (['translations', defLocale]);
+      return state.setIn (['translations', action.locale], def);
     }
 
     case 'NABU_ADD_MESSAGE': {
-      let size = state.getIn (['en-US']).size;
-      if (!state.hasIn (['en-US', action.messageId])) {
+      const defLocale = state.get ('defaultLocale');
+      let size = state.getIn (['translations', defLocale]).size;
+      if (!state.hasIn (['translations', defLocale, action.messageId])) {
         size++;
       }
+      let newState = state.get ('translations');
+      newState.keySeq ().forEach ((locale) => {
+        newState = newState.setIn ([locale, action.messageId], fromJS ({
+          id:             action.messageId,
+          defaultMessage: action.messageId,
+          default:        action.messageId,
+          description:    action.description,
+          translated:     false
+        }));
+      });
       return state
-        .setIn (['en-US', action.messageId], fromJS ({
-          id:             action.messageId,
-          defaultMessage: action.messageId,
-          default:        action.messageId,
-          description:    action.description,
-          translated:     false
-        }))
-        .setIn (['fr-CH', action.messageId], fromJS ({
-          id:             action.messageId,
-          defaultMessage: action.messageId,
-          default:        action.messageId,
-          description:    action.description,
-          translated:     false
-        }))
-        .setIn (['de-CH', action.messageId], fromJS ({
-          id:             action.messageId,
-          defaultMessage: action.messageId,
-          default:        action.messageId,
-          description:    action.description,
-          translated:     false
-        }))
+        .set ('translations', newState)
         .setIn (['translator','tableSize'], size);
     }
   }

@@ -13,9 +13,9 @@ const state = fromJS ({
     isOpen: false,
     tableSize: 0
   }),
-  'en-US': fromJS ({}),
-  'fr-CH': fromJS ({}),
-  'de-CH': fromJS ({})
+  translations: fromJS ({
+    [DEFAULT_LOCALE]: fromJS ({}),
+  })
 });
 
 module.exports = state;

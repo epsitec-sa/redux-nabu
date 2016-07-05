@@ -26,6 +26,10 @@ const translate = (l, m, v) => createAction ('NABU_TRANSLATE', {
   value:     v
 });
 
+const addLocale = (l) => createAction ('NABU_ADD_LOCALE', {
+  locale: l
+});
+
 const addMessage = (m, d) => createAction ('NABU_ADD_MESSAGE', {
   messageId:   m,
   description: d
@@ -68,6 +72,7 @@ module.exports = {
   nabuReducer:  require ('./reducer.js'),
   changeLocale,
   translate,
+  addLocale,
   addMessage,
   toggleMarker,
   toggleTranslatorPanel,
