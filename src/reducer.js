@@ -11,6 +11,10 @@ function nabuReducer (state = initialNabu, action = {}) {
     }
 
     case 'NABU_TRANSLATE': {
+      if (!state.hasIn (['translations', action.locale, action.messageId])) {
+        return state;
+      }
+
       const newGen = state.get ('nabuGen') + 1;
       const message = state.getIn (['translations', action.locale, action.messageId]);
       const newMessage = message.withMutations (map => {
