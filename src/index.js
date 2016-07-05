@@ -49,7 +49,7 @@ module.exports = {
   addMessage:            addMessage,
   toggleMarker:          toggleMarker,
   toggleTranslatorPanel: toggleTranslatorPanel,
-  initialState:          require ('./initialState.js'),
+  initialState:          require ('./initial-state.js'),
   nabuReducer:           require ('./reducer.js'),
   T: (store) => {
     return (msgid, values, desc) => {

@@ -2,7 +2,7 @@
 
 const {fromJS} = require ('immutable');
 
-const initialNabu = require ('./initialState.js');
+const initialNabu = require ('./initial-state.js');
 
 function nabuReducer (state = initialNabu, action = {}) {
   switch (action.type) {
