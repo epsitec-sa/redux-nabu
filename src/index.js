@@ -57,7 +57,6 @@ module.exports = {
       const messages = state.nabu.get (state.nabu.get ('locale'));
       const mustAdd = !messages.has (msgid);
       if (mustAdd) {
-        console.log ('NABU_ADD_MESSAGE:', msgid);
         store.dispatch (addMessage (msgid, desc));
       }
       const marker = state.nabu.get ('marker');
