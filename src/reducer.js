@@ -33,26 +33,26 @@ function nabuReducer (state = initialNabu, action = {}) {
     }
 
     case 'NABU_ADD_MESSAGE': {
-      let size = state.getIn (['en_US']).size;
-      if (!state.hasIn (['en_US', action.messageId])) {
+      let size = state.getIn (['en-US']).size;
+      if (!state.hasIn (['en-US', action.messageId])) {
         size++;
       }
       return state
-        .setIn (['en_US', action.messageId], fromJS ({
+        .setIn (['en-US', action.messageId], fromJS ({
           id:             action.messageId,
           defaultMessage: action.messageId,
           default:        action.messageId,
           description:    action.description,
           translated:     false
         }))
-        .setIn (['fr_CH', action.messageId], fromJS ({
+        .setIn (['fr-CH', action.messageId], fromJS ({
           id:             action.messageId,
           defaultMessage: action.messageId,
           default:        action.messageId,
           description:    action.description,
           translated:     false
         }))
-        .setIn (['de_CH', action.messageId], fromJS ({
+        .setIn (['de-CH', action.messageId], fromJS ({
           id:             action.messageId,
           defaultMessage: action.messageId,
           default:        action.messageId,
