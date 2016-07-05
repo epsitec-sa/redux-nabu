@@ -44,11 +44,11 @@ const mustTranslate = (messages, msgid) => {
 
 // API
 module.exports = {
-  changeLocale:          changeLocale,
-  translate:             translate,
-  addMessage:            addMessage,
-  toggleMarker:          toggleMarker,
-  toggleTranslatorPanel: toggleTranslatorPanel,
+  changeLocale,
+  translate,
+  addMessage,
+  toggleMarker,
+  toggleTranslatorPanel,
   initialState:          require ('./initial-state.js'),
   nabuReducer:           require ('./reducer.js'),
   T: (store) => {
