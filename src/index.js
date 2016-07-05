@@ -49,8 +49,8 @@ module.exports = {
   addMessage,
   toggleMarker,
   toggleTranslatorPanel,
-  initialState:          require ('./initial-state.js'),
-  nabuReducer:           require ('./reducer.js'),
+  initialState: require ('./initial-state.js'),
+  nabuReducer:  require ('./reducer.js'),
   T: (store) => {
     return (msgid, values, desc) => {
       const state = store.getState ();
