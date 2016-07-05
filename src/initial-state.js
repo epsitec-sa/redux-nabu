@@ -1,6 +1,6 @@
 'use strict';
 
-const {Map, Set, fromJS} = require ('immutable');
+const {fromJS} = require ('immutable');
 
 const state = fromJS ({
   locale:  'en_US',
