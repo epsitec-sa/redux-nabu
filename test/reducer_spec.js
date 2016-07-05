@@ -9,6 +9,7 @@ describe ('ReducerSpec -> actions', () => {
     const translateAction = translate (1, 2, 3);
     const changeLocaleAction = changeLocale ('fr_CH');
     const addMessageAction = addMessage (1, 2);
+
     expect (translateAction).to.eql ({
       type: 'NABU_TRANSLATE',
       locale: 1,
