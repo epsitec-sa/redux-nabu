@@ -9,6 +9,7 @@ const state = fromJS ({
   locale:  DEFAULT_LOCALE,
   nabuGen: 0,
   marker:  false,
+  focus:   null,
   translator: fromJS ({
     isOpen: false,
     tableSize: 0

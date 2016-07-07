@@ -38,6 +38,11 @@ const addMessage = (m, d) => createAction ('NABU_ADD_MESSAGE', {
 const toggleMarker = () => createAction ('NABU_TOGGLE_MARKS', {});
 const toggleTranslatorPanel = () => createAction ('NABU_TOGGLE_TRANSLATOR', {});
 
+const setFocus = (m, v) => createAction ('NABU_SET_FOCUS', {
+  messageId: m,
+  value:     v
+});
+
 const mustTranslate = (messages, msgid) => {
   const mustTranslate = !messages.has (msgid);
   if (mustTranslate) {
@@ -76,5 +81,6 @@ module.exports = {
   addMessage,
   toggleMarker,
   toggleTranslatorPanel,
+  setFocus,
   T
 };
