@@ -1,6 +1,6 @@
 {
   "name": "redux-nabu",
-  "version": "0.5.2",
+  "version": "0.5.3",
   "description": "i18n backend for react-tools",
   "main": "lib/index.js",
   "scripts": {
