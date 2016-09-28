@@ -52,6 +52,9 @@ function nabuReducer (state = initialNabu, action = {}) {
       if (!state.hasIn (['translations', defLocale, action.messageId])) {
         size++;
       }
+      else {
+        return state;
+      }
       let newState = state.get ('translations');
       newState.keySeq ().forEach ((locale) => {
         newState = newState.setIn ([locale, action.messageId], fromJS ({
