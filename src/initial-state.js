@@ -10,6 +10,10 @@ const state = fromJS ({
   nabuGen: 0,
   marker:  false,
   focus:   null,
+  selectionMode: {
+    enabled: false,
+    selectedItemId: null,
+  },
   translator: fromJS ({
     isOpen: false,
     tableSize: 0
