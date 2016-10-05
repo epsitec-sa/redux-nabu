@@ -46,6 +46,14 @@ function nabuReducer (state = initialNabu, action = {}) {
       return state.set ('focus', action.value ? action.messageId : null);
     }
 
+    case 'NABU_SET_SELECTED_ITEM': {
+      return state.setIn (['selectionMode', 'selectedItemId'], action.value ? action.messageId : null);
+    }
+
+    case 'NABU_SET_SELECTION_MODE': {
+      return state.setIn (['selectionMode', 'enabled'], action.enabled);
+    }
+
     case 'NABU_ADD_MESSAGE': {
       const defLocale = state.get ('defaultLocale');
       let size = state.getIn (['translations', defLocale]).size;
