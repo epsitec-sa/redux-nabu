@@ -39,9 +39,11 @@ const translate = (l, m, v) => createAction ('NABU_TRANSLATE', {
 });
 
 
-const addMessage = (m, d) => createAction ('NABU_ADD_MESSAGE', {
+const setMessage = (m, l, d, t) => createAction ('NABU_SET_MESSAGE', {
   messageId:   m,
-  description: d
+  locale:      l,
+  description: d,
+  translation: t
 });
 
 
@@ -104,6 +106,8 @@ module.exports = {
 
   translate,
   addMessage,
+  setMessage,
+
   toggleMarker,
   toggleTranslatorPanel,
   setFocus,

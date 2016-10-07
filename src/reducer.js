@@ -59,9 +59,6 @@ function setMessage(state, messageId, description, locale, translation) {
 }
 
 
-    case 'NABU_ADD_MESSAGE': {
-      return setMessage (state, action.messageId, action.description, null, null);
-    }
 
 function nabuReducer (state = initialNabu, action = {}) {
   switch (action.type) {
@@ -75,19 +72,17 @@ function nabuReducer (state = initialNabu, action = {}) {
     }
 
 
-      if (!state.hasIn (['translations', action.locale, action.messageId])) {
-        newState = addMessage (state, action.messageId, '');
-      }
 
-      const newGen = newState.get ('nabuGen') + 1;
-      const message = newState.getIn (['translations', action.locale, action.messageId]);
-      const newMessage = message.withMutations (map => {
-        map.set ('defaultMessage', action.value).set ('translated', !!action.value);
-      });
+    case 'NABU_ADD_MESSAGE': {
+      return setMessage (state, action.messageId, action.description, null, null);
+    }
 
-      return newState
-        .setIn (['translations', action.locale, action.messageId], newMessage)
-        .set ('nabuGen', newGen);
+    case 'NABU_TRANSLATE': {
+      return setMessage (state, action.messageId, null, action.locale, action.value);
+    }
+
+    case 'NABU_SET_MESSAGE': {
+      return setMessage (state, action.messageId, action.description, action.locale, action.value);
     }
 
 
