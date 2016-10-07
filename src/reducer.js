@@ -69,7 +69,7 @@ function addMessage(state, messageId, description) {
 function nabuReducer (state = initialNabu, action = {}) {
   switch (action.type) {
     case 'NABU_CHANGE_LOCALE': {
-      return state.set ('locale', action.locale);
+      return state.set ('selectedLocale', action.locale);
     }
 
     case 'NABU_TRANSLATE': {
@@ -101,9 +101,8 @@ function nabuReducer (state = initialNabu, action = {}) {
     }
 
     case 'NABU_ADD_LOCALE': {
-      const defLocale = state.get ('defaultLocale');
-      const def = state.getIn (['translations', defLocale]);
-      return state.setIn (['translations', action.locale], def);
+      let newLocales = state.get ('images').add (action.locale);
+      return state.set ('locales', newLocales);
     }
 
     case 'NABU_SET_FOCUS': {
