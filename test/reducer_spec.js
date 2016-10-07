@@ -4,19 +4,20 @@ import {expect} from 'chai';
 import {
   nabuReducer,
   translate,
-  changeLocale,
+  changeSelectedLocale,
   addLocale,
   addMessage,
+  setMessage,
   toggleMarker,
   toggleTranslatorPanel
 } from '../src/index.js';
 
 
 describe ('ReducerSpec -> actions', function () {
-  it ('NABU_CHANGE_LOCALE', function () {
-    const changeLocaleAction = changeLocale ('fr-CH');
-    expect (changeLocaleAction).to.eql ({
-      type: 'NABU_CHANGE_LOCALE',
+  it ('NABU_CHANGE_SELECTED_LOCALE', function () {
+    const changeSelectedLocaleAction = changeSelectedLocale ('fr-CH');
+    expect (changeSelectedLocaleAction).to.eql ({
+      type: 'NABU_CHANGE_SELECTED_LOCALE',
       locale: 'fr-CH'
     });
   });
@@ -53,19 +54,18 @@ const initialState = nabuReducer ();
 
 describe ('ReducerSpec -> reduce', function () {
   it ('NABU_CHANGE_LOCALE', function () {
-    const state = nabuReducer (initialState, changeLocale ('de-CH'));
-    expect (state.get ('locale')).to.eql ('de-CH');
+    const state = nabuReducer (initialState, changeSelectedLocale ('de-CH'));
+    expect (state.get ('selectedLocale')).to.eql ('de-CH');
   });
 
   it ('NABU_ADD_LOCALE', function () {
     const state = nabuReducer (initialState, addLocale ('de-CH'));
-    expect (state.hasIn (['translations', 'de-CH'])).to.eql (true);
+    expect (state.get ('locales').includes ('de-CH')).to.eql (true);
   });
 
   it ('NABU_ADD_MESSAGE', function () {
-    const defLocale = initialState.get ('defaultLocale');
     const state = nabuReducer (initialState, addMessage ('my message'));
-    expect (state.hasIn (['translations', defLocale, 'my message'])).to.eql (true);
+    expect (state.hasIn (['messages', 'my message'])).to.eql (true);
   });
 
   it ('NABU_TRANSLATE', function () {
@@ -74,17 +74,14 @@ describe ('ReducerSpec -> reduce', function () {
     state = nabuReducer (state, addLocale ('fr-CH'));
 
     expect (state.getIn ([
-      'translations', 'fr-CH', 'my message', 'translated'
-    ])).to.eql (false);
+      'messages', 'my message', 'translations'
+    ])).to.eql (undefined);
 
     state = nabuReducer (state, translate ('fr-CH', 'my message', 'mon message'));
 
     expect (state.getIn ([
-      'translations', 'fr-CH', 'my message', 'defaultMessage'
+      'messages', 'my message', 'translations', 'fr-CH', 'message'
     ])).to.eql ('mon message');
-    expect (state.getIn ([
-      'translations', 'fr-CH', 'my message', 'translated'
-    ])).to.eql (true);
   });
 
   it ('NABU_TOGGLE_MARKS', function () {
