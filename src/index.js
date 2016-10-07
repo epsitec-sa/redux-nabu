@@ -16,7 +16,7 @@ const setPayload    = (action, payload) => merge (action, payload);
 const createAction = curry ((command, payload) => setPayload (createCommand (command), payload));
 
 // Nabu actions
-const changeLocale = l => createAction ('NABU_CHANGE_LOCALE', {
+const changeSelectedLocale = l => createAction ('NABU_CHANGE_SELECTED_LOCALE', {
   locale: l
 });
 
@@ -88,6 +88,7 @@ module.exports = {
   changeLocale,
   translate,
   addLocale,
+  changeSelectedLocale,
   addMessage,
   toggleMarker,
   toggleTranslatorPanel,
