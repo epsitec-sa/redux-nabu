@@ -5,15 +5,10 @@ const {fromJS} = require ('immutable');
 const initialNabu = require ('./initial-state.js');
 
 
-function addMessage(state, messageId, description) {
-  const defLocale = state.get ('defaultLocale');
+function addNewMessage(state, defLocale, messageId, description) {
   let size = state.getIn (['translations', defLocale]).size;
-  if (!state.hasIn (['translations', defLocale, messageId])) {
-    size++;
-  }
-  else {
-    return state;
-  }
+  size++;
+
   let newState = state.get ('translations');
   newState.keySeq ().forEach ((locale) => {
     newState = newState.setIn ([locale, messageId], fromJS ({
@@ -27,6 +22,47 @@ function addMessage(state, messageId, description) {
   return state
     .set ('translations', newState)
     .setIn (['translator','tableSize'], size);
+}
+
+
+
+function addExistingMessage(state, messageId, description) {
+  let translationsState = state.get ('translations');
+  let somethingChanged = false;
+
+  translationsState.keySeq ().forEach ((locale) => {
+    const message = translationsState.getIn ([locale, messageId]);
+
+    const newMessage = message.withMutations (map => {
+      if (map.get ('description') === '') {
+        map.set ('description', description);
+        somethingChanged = true;
+      }
+    });
+
+    translationsState = translationsState.setIn ([locale, messageId], newMessage);
+  });
+
+  if (somethingChanged) {
+    return state
+      .set ('translations', translationsState);
+  }
+  else {
+    return state;
+  }
+}
+
+
+
+function addMessage(state, messageId, description) {
+  const defLocale = state.get ('defaultLocale');
+
+  if (!state.hasIn (['translations', defLocale, messageId])) {
+    return addNewMessage (state, defLocale, messageId, description);
+  }
+  else {
+    return addExistingMessage (state, messageId, description);
+  }
 }
 
 
