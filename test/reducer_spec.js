@@ -48,6 +48,17 @@ describe ('ReducerSpec -> actions', function () {
       description: 2
     });
   });
+
+  it ('NABU_SET_MESSAGE', function () {
+    const setMessageAction = setMessage (1, 2, 3, 4);
+    expect (setMessageAction).to.eql ({
+      type: 'NABU_SET_MESSAGE',
+      messageId:   1,
+      locale:      2,
+      description: 3,
+      translation: 4
+    });
+  });
 });
 
 const initialState = nabuReducer ();
@@ -83,6 +94,34 @@ describe ('ReducerSpec -> reduce', function () {
     expect (state.getIn ([
       'messages', 'my message', 'translations', 'fr-CH', 'message'
     ])).to.eql ('mon message');
+  });
+
+  it ('NABU_SET_MESSAGE', function () {
+    let state = initialState;
+    state = nabuReducer (state, setMessage ('my message', 'fr-CH', 'my description', null)); // locale but not translation
+
+    expect (state.getIn ([
+      'messages', 'my message', 'translations', 'fr-CH'
+    ])).to.eql (undefined);
+
+    expect (state.getIn ([
+      'messages', 'my message', 'description'
+    ])).to.eql ('my description');
+
+
+
+    state = nabuReducer (state, setMessage ('my message', 'fr-CH', 'nouvelle description', 'mon message'));
+
+    state = nabuReducer (state, setMessage ('my message', null, null, null)); // should remain the same
+
+
+    expect (state.getIn ([
+      'messages', 'my message', 'translations', 'fr-CH', 'message'
+    ])).to.eql ('mon message');
+
+    expect (state.getIn ([
+      'messages', 'my message', 'description'
+    ])).to.eql ('nouvelle description');
   });
 
   it ('NABU_TOGGLE_MARKS', function () {
