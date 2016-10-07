@@ -4,19 +4,20 @@ import {expect} from 'chai';
 import {
   nabuReducer,
   translate,
-  changeLocale,
+  changeSelectedLocale,
   addLocale,
   addMessage,
+  setMessage,
   toggleMarker,
   toggleTranslatorPanel
 } from '../src/index.js';
 
 
 describe ('ReducerSpec -> actions', function () {
-  it ('NABU_CHANGE_LOCALE', function () {
-    const changeLocaleAction = changeLocale ('fr-CH');
-    expect (changeLocaleAction).to.eql ({
-      type: 'NABU_CHANGE_LOCALE',
+  it ('NABU_CHANGE_SELECTED_LOCALE', function () {
+    const changeSelectedLocaleAction = changeSelectedLocale ('fr-CH');
+    expect (changeSelectedLocaleAction).to.eql ({
+      type: 'NABU_CHANGE_SELECTED_LOCALE',
       locale: 'fr-CH'
     });
   });
@@ -25,9 +26,9 @@ describe ('ReducerSpec -> actions', function () {
     const translateAction = translate (1, 2, 3);
     expect (translateAction).to.eql ({
       type: 'NABU_TRANSLATE',
-      locale: 1,
-      messageId: 2,
-      value: 3
+      locale:      1,
+      messageId:   2,
+      translation: 3
     });
   });
 
@@ -43,8 +44,19 @@ describe ('ReducerSpec -> actions', function () {
     const addMessageAction = addMessage (1, 2);
     expect (addMessageAction).to.eql ({
       type: 'NABU_ADD_MESSAGE',
-      messageId: 1,
+      messageId:   1,
       description: 2
+    });
+  });
+
+  it ('NABU_SET_MESSAGE', function () {
+    const setMessageAction = setMessage (1, 2, 3, 4);
+    expect (setMessageAction).to.eql ({
+      type: 'NABU_SET_MESSAGE',
+      messageId:   1,
+      locale:      2,
+      description: 3,
+      translation: 4
     });
   });
 });
@@ -53,19 +65,19 @@ const initialState = nabuReducer ();
 
 describe ('ReducerSpec -> reduce', function () {
   it ('NABU_CHANGE_LOCALE', function () {
-    const state = nabuReducer (initialState, changeLocale ('de-CH'));
-    expect (state.get ('locale')).to.eql ('de-CH');
+    const state = nabuReducer (initialState, changeSelectedLocale ('de-CH'));
+    expect (state.get ('selectedLocale')).to.eql ('de-CH');
   });
 
   it ('NABU_ADD_LOCALE', function () {
     const state = nabuReducer (initialState, addLocale ('de-CH'));
-    expect (state.hasIn (['translations', 'de-CH'])).to.eql (true);
+    expect (state.get ('locales').includes ('de-CH')).to.eql (true);
   });
 
   it ('NABU_ADD_MESSAGE', function () {
-    const defLocale = initialState.get ('defaultLocale');
     const state = nabuReducer (initialState, addMessage ('my message'));
-    expect (state.hasIn (['translations', defLocale, 'my message'])).to.eql (true);
+    expect (state.hasIn (['messages', 'my message'])).to.eql (true);
+    expect (state.hasIn (['messages', 'my message', 'translations'])).to.eql (true);
   });
 
   it ('NABU_TRANSLATE', function () {
@@ -74,17 +86,42 @@ describe ('ReducerSpec -> reduce', function () {
     state = nabuReducer (state, addLocale ('fr-CH'));
 
     expect (state.getIn ([
-      'translations', 'fr-CH', 'my message', 'translated'
-    ])).to.eql (false);
+      'messages', 'my message', 'translations', 'fr-CH'
+    ])).to.eql (undefined);
 
     state = nabuReducer (state, translate ('fr-CH', 'my message', 'mon message'));
 
     expect (state.getIn ([
-      'translations', 'fr-CH', 'my message', 'defaultMessage'
+      'messages', 'my message', 'translations', 'fr-CH', 'message'
     ])).to.eql ('mon message');
+  });
+
+  it ('NABU_SET_MESSAGE', function () {
+    let state = initialState;
+    state = nabuReducer (state, setMessage ('my message', 'fr-CH', 'my description', null)); // locale but not translation
+
     expect (state.getIn ([
-      'translations', 'fr-CH', 'my message', 'translated'
-    ])).to.eql (true);
+      'messages', 'my message', 'translations', 'fr-CH'
+    ])).to.eql (undefined);
+
+    expect (state.getIn ([
+      'messages', 'my message', 'description'
+    ])).to.eql ('my description');
+
+
+
+    state = nabuReducer (state, setMessage ('my message', 'fr-CH', 'nouvelle description', 'mon message'));
+
+    state = nabuReducer (state, setMessage ('my message', null, null, null)); // should remain the same
+
+
+    expect (state.getIn ([
+      'messages', 'my message', 'translations', 'fr-CH', 'message'
+    ])).to.eql ('mon message');
+
+    expect (state.getIn ([
+      'messages', 'my message', 'description'
+    ])).to.eql ('nouvelle description');
   });
 
   it ('NABU_TOGGLE_MARKS', function () {

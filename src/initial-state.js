@@ -5,22 +5,41 @@ const {fromJS} = require ('immutable');
 const DEFAULT_LOCALE = 'en-US';
 
 const state = fromJS ({
-  defaultLocale: DEFAULT_LOCALE,
-  locale:  DEFAULT_LOCALE,
-  nabuGen: 0,
+  selectedLocale:  DEFAULT_LOCALE,
+  locales: [],
+
   marker:  false,
   focus:   null,
+
   selectionMode: {
     enabled: false,
     selectedItemId: null,
   },
-  translator: fromJS ({
+
+  translator: {
     isOpen: false,
     tableSize: 0
-  }),
-  translations: fromJS ({
-    [DEFAULT_LOCALE]: fromJS ({}),
-  })
+  },
+
+  messages: {}
 });
 
 module.exports = state;
+
+
+/*
+Message is of type:
+
+[id]: {
+  description: '',
+  translations: {
+    [locale1]: {
+      message: ''
+    }
+  }
+}
+
+
+
+
+*/

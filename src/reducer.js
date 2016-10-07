@@ -4,27 +4,86 @@ const {fromJS} = require ('immutable');
 
 const initialNabu = require ('./initial-state.js');
 
+
+
+
+
+function addNewMessage(state, messageId, description, locale, translation) {
+  let size = state.get ('messages').size;
+  size++;
+
+  let newState = state.setIn (['messages', messageId], fromJS ({
+      description:    description,
+      translations:   {}
+    }));
+
+  if (locale && translation) {
+    newState = newState.setIn (['messages', messageId, 'translations'], fromJS ({
+      [locale]: {
+        message:    translation
+      }
+    }));
+  }
+
+  return newState
+    .setIn (['translator','tableSize'], size);
+}
+
+
+
+function setExistingMessage(state, messageId, description, locale, translation) {
+  let newState = state;
+
+  if (description) {
+    newState = newState.setIn (['messages', messageId, 'description'], description);
+  }
+
+  if (locale && translation) {
+    newState = newState.setIn (['messages', messageId, 'translations', locale, 'message'], translation);
+  }
+
+
+  return newState;
+}
+
+
+
+function setMessage(state, messageId, description, locale, translation) {
+  if (!state.hasIn (['messages', messageId])) {
+    return addNewMessage (state, messageId, description, locale, translation);
+  }
+  else {
+    return setExistingMessage (state, messageId, description, locale, translation);
+  }
+}
+
+
+
 function nabuReducer (state = initialNabu, action = {}) {
   switch (action.type) {
-    case 'NABU_CHANGE_LOCALE': {
-      return state.set ('locale', action.locale);
+    case 'NABU_ADD_LOCALE': {
+      const newLocales = state.get ('locales').push (action.locale);
+      return state.set ('locales', newLocales);
+    }
+
+    case 'NABU_CHANGE_SELECTED_LOCALE': {
+      return state.set ('selectedLocale', action.locale);
+    }
+
+
+
+    case 'NABU_ADD_MESSAGE': {
+      return setMessage (state, action.messageId, action.description, null, null);
     }
 
     case 'NABU_TRANSLATE': {
-      if (!state.hasIn (['translations', action.locale, action.messageId])) {
-        return state;
-      }
-
-      const newGen = state.get ('nabuGen') + 1;
-      const message = state.getIn (['translations', action.locale, action.messageId]);
-      const newMessage = message.withMutations (map => {
-        map.set ('defaultMessage', action.value).set ('translated', !!action.value);
-      });
-
-      return state
-        .setIn (['translations', action.locale, action.messageId], newMessage)
-        .set ('nabuGen', newGen);
+      return setMessage (state, action.messageId, null, action.locale, action.translation);
     }
+
+    case 'NABU_SET_MESSAGE': {
+      return setMessage (state, action.messageId, action.description, action.locale, action.translation);
+    }
+
 
     case 'NABU_TOGGLE_MARKS': {
       const newState = !state.get ('marker');
@@ -36,46 +95,19 @@ function nabuReducer (state = initialNabu, action = {}) {
       return state.setIn (['translator', 'isOpen'], newState);
     }
 
-    case 'NABU_ADD_LOCALE': {
-      const defLocale = state.get ('defaultLocale');
-      const def = state.getIn (['translations', defLocale]);
-      return state.setIn (['translations', action.locale], def);
-    }
-
     case 'NABU_SET_FOCUS': {
       return state.set ('focus', action.value ? action.messageId : null);
     }
 
+
+
     case 'NABU_SET_SELECTED_ITEM': {
-      return state.setIn (['selectionMode', 'selectedItemId'], action.value ? action.messageId : null);
+      return state.setIn (['selectionMode', 'selectedItemId'], action.messageId);
     }
 
-    case 'NABU_SET_SELECTION_MODE': {
-      return state.setIn (['selectionMode', 'enabled'], action.enabled);
-    }
-
-    case 'NABU_ADD_MESSAGE': {
-      const defLocale = state.get ('defaultLocale');
-      let size = state.getIn (['translations', defLocale]).size;
-      if (!state.hasIn (['translations', defLocale, action.messageId])) {
-        size++;
-      }
-      else {
-        return state;
-      }
-      let newState = state.get ('translations');
-      newState.keySeq ().forEach ((locale) => {
-        newState = newState.setIn ([locale, action.messageId], fromJS ({
-          id:             action.messageId,
-          defaultMessage: action.messageId,
-          default:        action.messageId,
-          description:    action.description,
-          translated:     false
-        }));
-      });
-      return state
-        .set ('translations', newState)
-        .setIn (['translator','tableSize'], size);
+    case 'NABU_TOGGLE_SELECTION_MODE': {
+      const newState = !state.getIn (['selectionMode', 'enabled']);
+      return state.setIn (['selectionMode', 'enabled'], newState);
     }
   }
   return state;
