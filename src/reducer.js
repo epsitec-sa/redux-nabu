@@ -13,7 +13,6 @@ function addNewMessage(state, messageId, description, locale, translation) {
   size++;
 
   let newState = state.setIn (['messages', messageId], fromJS ({
-      defaultMessage: messageId,
       description:    description
     }));
 

@@ -31,7 +31,6 @@ module.exports = state;
 Message is of type:
 
 [id]: {
-  defaultMessage: [id],
   description: '',
   translations: {
     [locale1]: {
