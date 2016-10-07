@@ -98,7 +98,8 @@ describe ('ReducerSpec -> reduce', function () {
 
   it ('NABU_SET_MESSAGE', function () {
     let state = initialState;
-    state = nabuReducer (state, setMessage ('my message', 'fr-CH', 'my description', null)); // locale but not translation
+    // locale but not translation
+    state = nabuReducer (state, setMessage ('my message', 'fr-CH', 'my description', null));
 
     expect (state.getIn ([
       'messages', 'my message', 'translations', 'fr-CH'
@@ -108,12 +109,9 @@ describe ('ReducerSpec -> reduce', function () {
       'messages', 'my message', 'description'
     ])).to.eql ('my description');
 
-
-
     state = nabuReducer (state, setMessage ('my message', 'fr-CH', 'nouvelle description', 'mon message'));
-
-    state = nabuReducer (state, setMessage ('my message', null, null, null)); // should remain the same
-
+    // should remain the same
+    state = nabuReducer (state, setMessage ('my message', null, null, null));
 
     expect (state.getIn ([
       'messages', 'my message', 'translations', 'fr-CH', 'message'

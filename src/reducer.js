@@ -1,37 +1,30 @@
 'use strict';
 
-const {fromJS} = require ('immutable');
-
+const {fromJS}    = require ('immutable');
 const initialNabu = require ('./initial-state.js');
 
 
-
-
-
-function addNewMessage(state, messageId, description, locale, translation) {
+function addMessage (state, messageId, description, locale, translation) {
   let size = state.get ('messages').size;
   size++;
 
   let newState = state.setIn (['messages', messageId], fromJS ({
-      description:    description,
-      translations:   {}
-    }));
+    description:  description,
+    translations: {}
+  }));
 
   if (locale && translation) {
     newState = newState.setIn (['messages', messageId, 'translations'], fromJS ({
       [locale]: {
-        message:    translation
+        message: translation
       }
     }));
   }
 
-  return newState
-    .setIn (['translator','tableSize'], size);
+  return newState.setIn (['translator','tableSize'], size);
 }
 
-
-
-function setExistingMessage(state, messageId, description, locale, translation) {
+function updateMessage (state, messageId, description, locale, translation) {
   let newState = state;
 
   if (description) {
@@ -42,22 +35,16 @@ function setExistingMessage(state, messageId, description, locale, translation) 
     newState = newState.setIn (['messages', messageId, 'translations', locale, 'message'], translation);
   }
 
-
   return newState;
 }
 
-
-
-function setMessage(state, messageId, description, locale, translation) {
+function setMessage (state, messageId, description, locale, translation) {
   if (!state.hasIn (['messages', messageId])) {
-    return addNewMessage (state, messageId, description, locale, translation);
-  }
-  else {
-    return setExistingMessage (state, messageId, description, locale, translation);
+    return addMessage (state, messageId, description, locale, translation);
+  } else {
+    return updateMessage (state, messageId, description, locale, translation);
   }
 }
-
-
 
 function nabuReducer (state = initialNabu, action = {}) {
   switch (action.type) {
@@ -70,8 +57,6 @@ function nabuReducer (state = initialNabu, action = {}) {
       return state.set ('selectedLocale', action.locale);
     }
 
-
-
     case 'NABU_ADD_MESSAGE': {
       return setMessage (state, action.messageId, action.description, null, null);
     }
@@ -83,7 +68,6 @@ function nabuReducer (state = initialNabu, action = {}) {
     case 'NABU_SET_MESSAGE': {
       return setMessage (state, action.messageId, action.description, action.locale, action.translation);
     }
-
 
     case 'NABU_TOGGLE_MARKS': {
       const newState = !state.get ('marker');
@@ -99,8 +83,6 @@ function nabuReducer (state = initialNabu, action = {}) {
       return state.set ('focus', action.value ? action.messageId : null);
     }
 
-
-
     case 'NABU_SET_SELECTED_ITEM': {
       return state.setIn (['selectionMode', 'selectedItemId'], action.messageId);
     }
@@ -110,6 +92,7 @@ function nabuReducer (state = initialNabu, action = {}) {
       return state.setIn (['selectionMode', 'enabled'], newState);
     }
   }
+
   return state;
 }
 

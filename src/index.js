@@ -3,6 +3,7 @@
 const curry = require ('ramda').curry;
 const merge = require ('ramda').merge;
 
+
 if (!global.Intl) {
   require ('intl');
 }
@@ -24,20 +25,16 @@ const addLocale = (l) => createAction ('NABU_ADD_LOCALE', {
   locale: l
 });
 
-
-
-
-const addMessage = (m, d) => createAction ('NABU_ADD_MESSAGE', {
-  messageId:   m,
-  description: d
-});
-
 const translate = (l, m, t) => createAction ('NABU_TRANSLATE', {
   locale:      l,
   messageId:   m,
   translation: t
 });
 
+const addMessage = (m, d) => createAction ('NABU_ADD_MESSAGE', {
+  messageId:   m,
+  description: d
+});
 
 const setMessage = (m, l, d, t) => createAction ('NABU_SET_MESSAGE', {
   messageId:   m,
@@ -45,10 +42,6 @@ const setMessage = (m, l, d, t) => createAction ('NABU_SET_MESSAGE', {
   description: d,
   translation: t
 });
-
-
-
-
 
 const toggleMarker = () => createAction ('NABU_TOGGLE_MARKS', {});
 const toggleTranslatorPanel = () => createAction ('NABU_TOGGLE_TRANSLATOR', {});
@@ -58,15 +51,11 @@ const setFocus = (m, v) => createAction ('NABU_SET_FOCUS', {
   value:     v
 });
 
-
-
 const toggleSelectionMode = () => createAction ('NABU_TOGGLE_SELECTION_MODE', {});
 
 const setSelectedItem = (m) => createAction ('NABU_SET_SELECTED_ITEM', {
   messageId: m
 });
-
-
 
 const mustTranslate = (locale, messages, msgid) => {
   const mustTranslate = !messages.has (msgid);
@@ -77,8 +66,6 @@ const mustTranslate = (locale, messages, msgid) => {
 
   return !messages.getIn ([msgid, 'translations', locale]);
 };
-
-
 
 const T = (store) => {
   return (msgid, values, desc) => {
