@@ -22,7 +22,7 @@ const state = fromJS ({
     tableSize: 0
   },
 
-  messages: []
+  messages: {}
 });
 
 module.exports = state;

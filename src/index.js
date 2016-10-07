@@ -20,20 +20,33 @@ const changeSelectedLocale = l => createAction ('NABU_CHANGE_SELECTED_LOCALE', {
   locale: l
 });
 
+const addLocale = (l) => createAction ('NABU_ADD_LOCALE', {
+  locale: l
+});
+
+
+
+
+const addMessage = (m, d) => createAction ('NABU_ADD_MESSAGE', {
+  messageId:   m,
+  description: d
+});
+
 const translate = (l, m, v) => createAction ('NABU_TRANSLATE', {
   locale:    l,
   messageId: m,
   value:     v
 });
 
-const addLocale = (l) => createAction ('NABU_ADD_LOCALE', {
-  locale: l
-});
 
 const addMessage = (m, d) => createAction ('NABU_ADD_MESSAGE', {
   messageId:   m,
   description: d
 });
+
+
+
+
 
 const toggleMarker = () => createAction ('NABU_TOGGLE_MARKS', {});
 const toggleTranslatorPanel = () => createAction ('NABU_TOGGLE_TRANSLATOR', {});
@@ -85,15 +98,18 @@ const T = (store) => {
 module.exports = {
   initialState: require ('./initial-state.js'),
   nabuReducer:  require ('./reducer.js'),
-  changeLocale,
-  translate,
+
   addLocale,
   changeSelectedLocale,
+
+  translate,
   addMessage,
   toggleMarker,
   toggleTranslatorPanel,
   setFocus,
+
   setSelectedItem,
   toggleSelectionMode,
+
   T
 };
