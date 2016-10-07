@@ -13,7 +13,8 @@ function addNewMessage(state, messageId, description, locale, translation) {
   size++;
 
   let newState = state.setIn (['messages', messageId], fromJS ({
-      description:    description
+      description:    description,
+      translations:   {}
     }));
 
   if (locale && translation) {
@@ -31,19 +32,18 @@ function addNewMessage(state, messageId, description, locale, translation) {
 
 
 function setExistingMessage(state, messageId, description, locale, translation) {
-  const message = state.getIn (['messages', messageId]);
+  let newState = state;
 
-  const newMessage = message.withMutations (map => {
-    if (description) {
-      map.set ('description', description);
-    }
+  if (description) {
+    newState = newState.setIn (['messages', messageId, 'description'], description);
+  }
 
-    if (locale && translation) {
-      map.setIn (['translations', locale, 'message'], translation);
-    }
-  });
+  if (locale && translation) {
+    newState = newState.setIn (['messages', messageId, 'translations', locale, 'message'], translation);
+  }
 
-  return state.setIn (['messages', messageId], newMessage);
+
+  return newState;
 }
 
 
