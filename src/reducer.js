@@ -77,11 +77,11 @@ function nabuReducer (state = initialNabu, action = {}) {
     }
 
     case 'NABU_TRANSLATE': {
-      return setMessage (state, action.messageId, null, action.locale, action.value);
+      return setMessage (state, action.messageId, null, action.locale, action.translation);
     }
 
     case 'NABU_SET_MESSAGE': {
-      return setMessage (state, action.messageId, action.description, action.locale, action.value);
+      return setMessage (state, action.messageId, action.description, action.locale, action.translation);
     }
 
 

@@ -32,10 +32,10 @@ const addMessage = (m, d) => createAction ('NABU_ADD_MESSAGE', {
   description: d
 });
 
-const translate = (l, m, v) => createAction ('NABU_TRANSLATE', {
-  locale:    l,
-  messageId: m,
-  value:     v
+const translate = (l, m, t) => createAction ('NABU_TRANSLATE', {
+  locale:      l,
+  messageId:   m,
+  translation: t
 });
 
 
