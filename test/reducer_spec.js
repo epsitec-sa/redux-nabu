@@ -26,9 +26,9 @@ describe ('ReducerSpec -> actions', function () {
     const translateAction = translate (1, 2, 3);
     expect (translateAction).to.eql ({
       type: 'NABU_TRANSLATE',
-      locale: 1,
-      messageId: 2,
-      value: 3
+      locale:      1,
+      messageId:   2,
+      translation: 3
     });
   });
 
@@ -44,7 +44,7 @@ describe ('ReducerSpec -> actions', function () {
     const addMessageAction = addMessage (1, 2);
     expect (addMessageAction).to.eql ({
       type: 'NABU_ADD_MESSAGE',
-      messageId: 1,
+      messageId:   1,
       description: 2
     });
   });
@@ -66,6 +66,7 @@ describe ('ReducerSpec -> reduce', function () {
   it ('NABU_ADD_MESSAGE', function () {
     const state = nabuReducer (initialState, addMessage ('my message'));
     expect (state.hasIn (['messages', 'my message'])).to.eql (true);
+    expect (state.hasIn (['messages', 'my message', 'translations'])).to.eql (true);
   });
 
   it ('NABU_TRANSLATE', function () {
@@ -74,7 +75,7 @@ describe ('ReducerSpec -> reduce', function () {
     state = nabuReducer (state, addLocale ('fr-CH'));
 
     expect (state.getIn ([
-      'messages', 'my message', 'translations'
+      'messages', 'my message', 'translations', 'fr-CH'
     ])).to.eql (undefined);
 
     state = nabuReducer (state, translate ('fr-CH', 'my message', 'mon message'));
