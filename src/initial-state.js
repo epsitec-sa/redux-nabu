@@ -8,7 +8,6 @@ const state = fromJS ({
   selectedLocale:  DEFAULT_LOCALE,
   locales: [],
 
-  nabuGen: 0,
   marker:  false,
   focus:   null,
 
