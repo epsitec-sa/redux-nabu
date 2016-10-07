@@ -43,14 +43,15 @@ const setFocus = (m, v) => createAction ('NABU_SET_FOCUS', {
   value:     v
 });
 
-const setSelectedItem = (m, v) => createAction ('NABU_SET_SELECTED_ITEM', {
-  messageId: m,
-  value:     v
+
+
+const toggleSelectionMode = () => createAction ('NABU_TOGGLE_SELECTION_MODE', {});
+
+const setSelectedItem = (m) => createAction ('NABU_SET_SELECTED_ITEM', {
+  messageId: m
 });
 
-const setSelectionMode = (e) => createAction ('NABU_SET_SELECTION_MODE', {
-  enabled: e
-});
+
 
 const mustTranslate = (messages, msgid) => {
   const mustTranslate = !messages.has (msgid);
@@ -92,6 +93,6 @@ module.exports = {
   toggleTranslatorPanel,
   setFocus,
   setSelectedItem,
-  setSelectionMode,
+  toggleSelectionMode,
   T
 };

@@ -110,11 +110,12 @@ function nabuReducer (state = initialNabu, action = {}) {
     }
 
     case 'NABU_SET_SELECTED_ITEM': {
-      return state.setIn (['selectionMode', 'selectedItemId'], action.value ? action.messageId : null);
+      return state.setIn (['selectionMode', 'selectedItemId'], action.messageId);
     }
 
-    case 'NABU_SET_SELECTION_MODE': {
-      return state.setIn (['selectionMode', 'enabled'], action.enabled);
+    case 'NABU_TOGGLE_SELECTION_MODE': {
+      const newState = !state.getIn (['selectionMode', 'enabled']);
+      return state.setIn (['selectionMode', 'enabled'], newState);
     }
 
     case 'NABU_ADD_MESSAGE': {
