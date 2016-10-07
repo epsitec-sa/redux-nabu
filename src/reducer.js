@@ -66,14 +66,21 @@ function addMessage(state, messageId, description) {
 }
 
 
+    case 'NABU_ADD_MESSAGE': {
+      return setMessage (state, action.messageId, action.description, null, null);
+    }
+
 function nabuReducer (state = initialNabu, action = {}) {
   switch (action.type) {
+    case 'NABU_ADD_LOCALE': {
+      let newLocales = state.get ('images').add (action.locale);
+      return state.set ('locales', newLocales);
+    }
+
     case 'NABU_CHANGE_SELECTED_LOCALE': {
       return state.set ('selectedLocale', action.locale);
     }
 
-    case 'NABU_TRANSLATE': {
-      let newState = state;
 
       if (!state.hasIn (['translations', action.locale, action.messageId])) {
         newState = addMessage (state, action.messageId, '');
@@ -90,6 +97,7 @@ function nabuReducer (state = initialNabu, action = {}) {
         .set ('nabuGen', newGen);
     }
 
+
     case 'NABU_TOGGLE_MARKS': {
       const newState = !state.get ('marker');
       return state.set ('marker', newState);
@@ -100,14 +108,11 @@ function nabuReducer (state = initialNabu, action = {}) {
       return state.setIn (['translator', 'isOpen'], newState);
     }
 
-    case 'NABU_ADD_LOCALE': {
-      let newLocales = state.get ('images').add (action.locale);
-      return state.set ('locales', newLocales);
-    }
-
     case 'NABU_SET_FOCUS': {
       return state.set ('focus', action.value ? action.messageId : null);
     }
+
+
 
     case 'NABU_SET_SELECTED_ITEM': {
       return state.setIn (['selectionMode', 'selectedItemId'], action.messageId);
@@ -116,10 +121,6 @@ function nabuReducer (state = initialNabu, action = {}) {
     case 'NABU_TOGGLE_SELECTION_MODE': {
       const newState = !state.getIn (['selectionMode', 'enabled']);
       return state.setIn (['selectionMode', 'enabled'], newState);
-    }
-
-    case 'NABU_ADD_MESSAGE': {
-      return addMessage (state, action.messageId, action.description);
     }
   }
   return state;
