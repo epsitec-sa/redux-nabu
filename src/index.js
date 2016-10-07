@@ -68,26 +68,36 @@ const setSelectedItem = (m) => createAction ('NABU_SET_SELECTED_ITEM', {
 
 
 
-const mustTranslate = (messages, msgid) => {
+const mustTranslate = (locale, messages, msgid) => {
   const mustTranslate = !messages.has (msgid);
+
   if (mustTranslate) {
-    return mustTranslate;
+    return true;
   }
-  return !messages.getIn ([msgid, 'translated']);
+
+  return !messages.getIn ([msgid, 'translations', locale]);
 };
+
+
 
 const T = (store) => {
   return (msgid, values, desc) => {
     const state = store.getState ();
-    const messages = state.nabu.getIn (['translations', state.nabu.get ('locale')]);
+
+    const locale = state.nabu.get ('selectedLocale');
+    const messages = state.nabu.get ('messages');
+
     const mustAdd = !messages.has (msgid);
     if (mustAdd) {
-      store.dispatch (addMessage (msgid, desc));
+      store.dispatch (setMessage (msgid, locale, desc, null));
     }
+
     const marker = state.nabu.get ('marker');
-    const markerOn = mustTranslate (messages, msgid) && marker;
-    const msg = messages.getIn ([msgid, 'defaultMessage'], msgid);
-    const message = new IntlMessageFormat (msg, state.nabu.get ('locale'));
+    const markerOn = marker && mustTranslate (locale, messages, msgid);
+
+    const msg = messages.getIn ([msgid, 'translations', locale, 'message'], msgid);
+    const message = new IntlMessageFormat (msg, locale);
+
     let text = message.format (values);
     if (markerOn) {
       text = '#' + text + '#';
