@@ -5,63 +5,56 @@ const {fromJS} = require ('immutable');
 const initialNabu = require ('./initial-state.js');
 
 
-function addNewMessage(state, defLocale, messageId, description) {
-  let size = state.getIn (['translations', defLocale]).size;
+
+
+
+function addNewMessage(state, messageId, description, locale, translation) {
+  let size = state.get ('messages').size;
   size++;
 
-  let newState = state.get ('translations');
-  newState.keySeq ().forEach ((locale) => {
-    newState = newState.setIn ([locale, messageId], fromJS ({
-      id:             messageId,
+  let newState = state.setIn (['messages', messageId], fromJS ({
       defaultMessage: messageId,
-      default:        messageId,
-      description:    description,
-      translated:     false
+      description:    description
     }));
-  });
-  return state
-    .set ('translations', newState)
+
+  if (locale && translation) {
+    newState = newState.setIn (['messages', messageId, 'translations'], fromJS ({
+      [locale]: {
+        message:    translation
+      }
+    }));
+  }
+
+  return newState
     .setIn (['translator','tableSize'], size);
 }
 
 
 
-function addExistingMessage(state, messageId, description) {
-  let translationsState = state.get ('translations');
-  let somethingChanged = false;
+function setExistingMessage(state, messageId, description, locale, translation) {
+  const message = state.getIn (['messages', messageId]);
 
-  translationsState.keySeq ().forEach ((locale) => {
-    const message = translationsState.getIn ([locale, messageId]);
+  const newMessage = message.withMutations (map => {
+    if (description) {
+      map.set ('description', description);
+    }
 
-    const newMessage = message.withMutations (map => {
-      if (map.get ('description') === '') {
-        map.set ('description', description);
-        somethingChanged = true;
-      }
-    });
-
-    translationsState = translationsState.setIn ([locale, messageId], newMessage);
+    if (locale && translation) {
+      map.setIn (['translations', locale, 'message'], translation);
+    }
   });
 
-  if (somethingChanged) {
-    return state
-      .set ('translations', translationsState);
-  }
-  else {
-    return state;
-  }
+  return state.setIn (['messages', messageId], newMessage);
 }
 
 
 
-function addMessage(state, messageId, description) {
-  const defLocale = state.get ('defaultLocale');
-
-  if (!state.hasIn (['translations', defLocale, messageId])) {
-    return addNewMessage (state, defLocale, messageId, description);
+function setMessage(state, messageId, description, locale, translation) {
+  if (!state.hasIn (['messages', messageId])) {
+    return addNewMessage (state, messageId, description, locale, translation);
   }
   else {
-    return addExistingMessage (state, messageId, description);
+    return setExistingMessage (state, messageId, description, locale, translation);
   }
 }
 
