@@ -62,7 +62,7 @@ function setMessage(state, messageId, description, locale, translation) {
 function nabuReducer (state = initialNabu, action = {}) {
   switch (action.type) {
     case 'NABU_ADD_LOCALE': {
-      let newLocales = state.get ('locales').add (action.locale);
+      const newLocales = state.get ('locales').push (action.locale);
       return state.set ('locales', newLocales);
     }
 
