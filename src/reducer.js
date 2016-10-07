@@ -4,6 +4,32 @@ const {fromJS} = require ('immutable');
 
 const initialNabu = require ('./initial-state.js');
 
+
+function addMessage(state, messageId, description) {
+  const defLocale = state.get ('defaultLocale');
+  let size = state.getIn (['translations', defLocale]).size;
+  if (!state.hasIn (['translations', defLocale, messageId])) {
+    size++;
+  }
+  else {
+    return state;
+  }
+  let newState = state.get ('translations');
+  newState.keySeq ().forEach ((locale) => {
+    newState = newState.setIn ([locale, messageId], fromJS ({
+      id:             messageId,
+      defaultMessage: messageId,
+      default:        messageId,
+      description:    description,
+      translated:     false
+    }));
+  });
+  return state
+    .set ('translations', newState)
+    .setIn (['translator','tableSize'], size);
+}
+
+
 function nabuReducer (state = initialNabu, action = {}) {
   switch (action.type) {
     case 'NABU_CHANGE_LOCALE': {
@@ -11,17 +37,19 @@ function nabuReducer (state = initialNabu, action = {}) {
     }
 
     case 'NABU_TRANSLATE': {
+      let newState = state;
+
       if (!state.hasIn (['translations', action.locale, action.messageId])) {
-        return state;
+        newState = addMessage (state, action.messageId, '');
       }
 
-      const newGen = state.get ('nabuGen') + 1;
-      const message = state.getIn (['translations', action.locale, action.messageId]);
+      const newGen = newState.get ('nabuGen') + 1;
+      const message = newState.getIn (['translations', action.locale, action.messageId]);
       const newMessage = message.withMutations (map => {
         map.set ('defaultMessage', action.value).set ('translated', !!action.value);
       });
 
-      return state
+      return newState
         .setIn (['translations', action.locale, action.messageId], newMessage)
         .set ('nabuGen', newGen);
     }
@@ -55,27 +83,7 @@ function nabuReducer (state = initialNabu, action = {}) {
     }
 
     case 'NABU_ADD_MESSAGE': {
-      const defLocale = state.get ('defaultLocale');
-      let size = state.getIn (['translations', defLocale]).size;
-      if (!state.hasIn (['translations', defLocale, action.messageId])) {
-        size++;
-      }
-      else {
-        return state;
-      }
-      let newState = state.get ('translations');
-      newState.keySeq ().forEach ((locale) => {
-        newState = newState.setIn ([locale, action.messageId], fromJS ({
-          id:             action.messageId,
-          defaultMessage: action.messageId,
-          default:        action.messageId,
-          description:    action.description,
-          translated:     false
-        }));
-      });
-      return state
-        .set ('translations', newState)
-        .setIn (['translator','tableSize'], size);
+      return addMessage (state, action.messageId, action.description);
     }
   }
   return state;
