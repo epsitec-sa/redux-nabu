@@ -2,6 +2,9 @@
   "name": "redux-nabu",
   "version": "1.0.0",
   "description": "i18n backend for react-tools",
+  "engine": {
+    "node": ">=4.0.0"
+  },
   "main": "lib/index.js",
   "scripts": {
     "prepublish": "babel src --out-dir lib",
@@ -26,9 +29,8 @@
   },
   "homepage": "https://github.com/epsitec-sa/redux-nabu#readme",
   "dependencies": {
-    "format-message": "^4.0.0",
     "immutable": "^3.7.6",
-    "intl-messageformat": "^1.2.0",
+    "messageformat": "^1.0.2",
     "ramda": "^0.19.1"
   },
   "devDependencies": {
@@ -41,8 +43,5 @@
     "jsdom": "^8.0.2",
     "mocha": "^2.4.5",
     "rimraf": "^2.5.1"
-  },
-  "peerDependencies": {
-    "intl": "^1.1.0"
   }
 }
