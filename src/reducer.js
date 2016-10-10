@@ -49,6 +49,11 @@ function setMessage (state, messageId, description, locale, translation) {
 function nabuReducer (state = initialNabu, action = {}) {
   switch (action.type) {
     case 'NABU_ADD_LOCALE': {
+      if (state.get ('locales').includes (action.locale)) {
+        console.log(action.locale + ' already exists');
+        return state;
+      }
+console.log(action.locale + ' does not exist');
       const newLocales = state.get ('locales').push (action.locale);
       return state.set ('locales', newLocales);
     }
@@ -62,7 +67,7 @@ function nabuReducer (state = initialNabu, action = {}) {
     }
 
     case 'NABU_TRANSLATE': {
-      return setMessage (state, action.messageId, null, action.locale, action.translation);
+      return setMessage (state, action.messageId, null, action.locale, action.value);
     }
 
     case 'NABU_SET_MESSAGE': {
