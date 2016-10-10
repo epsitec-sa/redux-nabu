@@ -20,10 +20,10 @@ const addLocale = (l) => createAction ('NABU_ADD_LOCALE', {
   locale: l
 });
 
-const translate = (l, m, t) => createAction ('NABU_TRANSLATE', {
+const translate = (l, m, v) => createAction ('NABU_TRANSLATE', {
   locale:      l,
   messageId:   m,
-  translation: t
+  value: v
 });
 
 const addMessage = (m, d) => createAction ('NABU_ADD_MESSAGE', {

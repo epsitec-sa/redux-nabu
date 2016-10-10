@@ -28,7 +28,7 @@ describe ('ReducerSpec -> actions', function () {
       type: 'NABU_TRANSLATE',
       locale:      1,
       messageId:   2,
-      translation: 3
+      value: 3
     });
   });
 
