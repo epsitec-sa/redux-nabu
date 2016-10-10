@@ -3,12 +3,7 @@
 const curry = require ('ramda').curry;
 const merge = require ('ramda').merge;
 
-
-if (!global.Intl) {
-  require ('intl');
-}
-
-const IntlMessageFormat = require ('intl-messageformat');
+import MessageFormat                 from 'messageformat';
 
 // Base action creator
 const createCommand = command => ({type: command});
@@ -83,9 +78,9 @@ const T = (store) => {
     const markerOn = marker && mustTranslate (locale, messages, msgid);
 
     const msg = messages.getIn ([msgid, 'translations', locale, 'message'], msgid);
-    const message = new IntlMessageFormat (msg, locale);
+    const formatter = new MessageFormat (locale).compile (msg);
 
-    let text = message.format (values);
+    let text = formatter (values);
     if (markerOn) {
       text = '#' + text + '#';
     }
