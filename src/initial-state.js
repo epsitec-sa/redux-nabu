@@ -34,6 +34,7 @@ module.exports = state;
  *   description: '',
  *   translations: {
  *     [locale1]: {
+ *       id: [id]
  *       message: ''
  *     }
  *   }
