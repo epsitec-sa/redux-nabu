@@ -51,10 +51,9 @@ function nabuReducer (state = initialNabu, action = {}) {
   switch (action.type) {
     case 'NABU_ADD_LOCALE': {
       if (state.get ('locales').includes (action.locale)) {
-        console.log(action.locale + ' already exists');
         return state;
       }
-console.log(action.locale + ' does not exist');
+
       const newLocales = state.get ('locales').push (action.locale);
       return state.set ('locales', newLocales);
     }
