@@ -8,7 +8,6 @@ import {
   addLocale,
   addMessage,
   setMessage,
-  setDescription,
   toggleMarker,
   toggleTranslatorPanel
 } from '../src/index.js';
@@ -58,15 +57,6 @@ describe ('ReducerSpec -> actions', function () {
       locale:      2,
       description: 3,
       translation: 4
-    });
-  });
-
-  it ('NABU_SET_DESCRIPTION', function () {
-    const addMessageAction = setDescription (1, 2);
-    expect (addMessageAction).to.eql ({
-      type: 'NABU_SET_DESCRIPTION',
-      messageId:   1,
-      description: 2
     });
   });
 });
@@ -130,12 +120,6 @@ describe ('ReducerSpec -> reduce', function () {
     expect (state.getIn ([
       'messages', 'my message', 'description'
     ])).to.eql ('nouvelle description');
-  });
-
-  it ('NABU_SET_DESCRIPTION', function () {
-    const state = nabuReducer (initialState, setDescription ('this message', 'the description'));
-    expect (state.hasIn (['messages', 'this message'])).to.eql (true);
-    expect (state.getIn (['messages', 'this message', 'description'])).to.eql ('the description');
   });
 
   it ('NABU_TOGGLE_MARKS', function () {
