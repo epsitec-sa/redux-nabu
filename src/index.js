@@ -23,7 +23,7 @@ const addLocale = (l) => createAction ('NABU_ADD_LOCALE', {
 const translate = (l, m, v) => createAction ('NABU_TRANSLATE', {
   locale:      l,
   messageId:   m,
-  value: v
+  value:       v
 });
 
 const addMessage = (m, d) => createAction ('NABU_ADD_MESSAGE', {
