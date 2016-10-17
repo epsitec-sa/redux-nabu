@@ -64,7 +64,7 @@ function nabuReducer (state = initialNabu, action = {}) {
 
     case 'NABU_ADD_MESSAGE': {
       console.log (`${action.type} is deprecated and can be removed in a ` +
-                   'future major release; please use NABU_SET_MESSAGE instead.');
+                   'future major release; please use NABU_SET_DESCRIPTION instead.');
       return setMessage (state, action.messageId, action.description, null, null);
     }
 
@@ -76,6 +76,10 @@ function nabuReducer (state = initialNabu, action = {}) {
 
     case 'NABU_SET_MESSAGE': {
       return setMessage (state, action.messageId, action.description, action.locale, action.translation);
+    }
+
+    case 'NABU_SET_DESCRIPTION': {
+      return setMessage (state, action.messageId, action.description, null, null);
     }
 
     case 'NABU_TOGGLE_MARKS': {

@@ -38,6 +38,11 @@ const setMessage = (m, l, d, t) => createAction ('NABU_SET_MESSAGE', {
   translation: t
 });
 
+const setDescription = (m, d) => createAction ('NABU_SET_DESCRIPTION', {
+  messageId:   m,
+  description: d
+});
+
 const toggleMarker = () => createAction ('NABU_TOGGLE_MARKS', {});
 const toggleTranslatorPanel = () => createAction ('NABU_TOGGLE_TRANSLATOR', {});
 
@@ -96,6 +101,7 @@ module.exports = {
   translate,
   addMessage,
   setMessage,
+  setDescription,
 
   toggleMarker,
   toggleTranslatorPanel,
