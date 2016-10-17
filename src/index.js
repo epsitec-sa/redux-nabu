@@ -69,10 +69,7 @@ const T = (store) => {
     const locale = state.nabu.get ('selectedLocale');
     const messages = state.nabu.get ('messages');
 
-    const mustAdd = !messages.has (msgid);
-    if (mustAdd) {
-      store.dispatch (setMessage (msgid, null, desc, null));
-    }
+    store.dispatch (setMessage (msgid, null, desc, null));
 
     const marker = state.nabu.get ('marker');
     const markerOn = marker && mustTranslate (locale, messages, msgid);
