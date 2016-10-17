@@ -31,13 +31,6 @@ const addMessage = (m, d) => createAction ('NABU_ADD_MESSAGE', {
   description: d
 });
 
-const setMessage = (m, l, d, t) => createAction ('NABU_SET_MESSAGE', {
-  messageId:   m,
-  locale:      l,
-  description: d,
-  translation: t
-});
-
 const toggleMarker = () => createAction ('NABU_TOGGLE_MARKS', {});
 const toggleTranslatorPanel = () => createAction ('NABU_TOGGLE_TRANSLATOR', {});
 
@@ -69,7 +62,7 @@ const T = (store) => {
     const locale = state.nabu.get ('selectedLocale');
     const messages = state.nabu.get ('messages');
 
-    store.dispatch (setMessage (msgid, null, desc, null));
+    store.dispatch (addMessage (msgid, desc));
 
     const marker = state.nabu.get ('marker');
     const markerOn = marker && mustTranslate (locale, messages, msgid);
@@ -95,7 +88,6 @@ module.exports = {
 
   translate,
   addMessage,
-  setMessage,
 
   toggleMarker,
   toggleTranslatorPanel,
