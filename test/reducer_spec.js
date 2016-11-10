@@ -96,3 +96,33 @@ describe ('ReducerSpec -> reduce', function () {
     expect (state.getIn (['translator', 'isOpen'])).to.eql (true);
   });
 });
+
+describe ('ReducerSpec -> scenario', function () {
+  it ('translate and addMessage', function () {
+     let state = initialState;
+     // locale without translation
+     state = nabuReducer (state, translate ('fr-CH', 'my message', null));
+
+     expect (state.getIn ([
+       'messages', 'my message', 'translations', 'fr-CH'
+     ])).to.eql (undefined);
+
+     state = nabuReducer (state, addMessage ('my message', 'my description'));
+
+     expect (state.getIn ([
+       'messages', 'my message', 'description'
+     ])).to.eql ('my description');
+
+     state = nabuReducer (state, translate ('fr-CH', 'my message', 'mon message'));
+
+     // should remain the same
+     state = nabuReducer (state, addMessage ('my message'));
+
+     expect (state.getIn ([
+       'messages', 'my message', 'translations', 'fr-CH', 'message'
+     ])).to.eql ('mon message');
+     expect (state.getIn ([
+       'messages', 'my message', 'description'
+     ])).to.eql ('my description');
+  });
+});
