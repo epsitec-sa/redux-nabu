@@ -2,7 +2,6 @@
 
 const {fromJS} = require ('immutable');
 
-
 const DEFAULT_LOCALE = 'en-US';
 
 const state = fromJS ({
@@ -19,10 +18,10 @@ const state = fromJS ({
 
   translator: {
     isOpen: false,
-    tableSize: 0
+    tableSize: 0,
   },
 
-  messages: {}
+  messages: {},
 });
 
 module.exports = state;

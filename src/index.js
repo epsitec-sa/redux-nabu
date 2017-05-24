@@ -3,47 +3,56 @@
 const curry = require ('ramda').curry;
 const merge = require ('ramda').merge;
 
-import MessageFormat                 from 'messageformat';
+import MessageFormat from 'messageformat';
 
 // Base action creator
 const createCommand = command => ({type: command});
-const setPayload    = (action, payload) => merge (action, payload);
+const setPayload = (action, payload) => merge (action, payload);
 
-const createAction = curry ((command, payload) => setPayload (createCommand (command), payload));
+const createAction = curry ((command, payload) =>
+  setPayload (createCommand (command), payload)
+);
 
 // Nabu actions
-const changeSelectedLocale = l => createAction ('NABU_CHANGE_SELECTED_LOCALE', {
-  locale: l
-});
+const changeSelectedLocale = l =>
+  createAction ('NABU_CHANGE_SELECTED_LOCALE', {
+    locale: l,
+  });
 
-const addLocale = (l) => createAction ('NABU_ADD_LOCALE', {
-  locale: l
-});
+const addLocale = l =>
+  createAction ('NABU_ADD_LOCALE', {
+    locale: l,
+  });
 
-const translate = (l, m, v) => createAction ('NABU_TRANSLATE', {
-  locale:      l,
-  messageId:   m,
-  value:       v
-});
+const translate = (l, m, v) =>
+  createAction ('NABU_TRANSLATE', {
+    locale: l,
+    messageId: m,
+    value: v,
+  });
 
-const addMessage = (m, d) => createAction ('NABU_ADD_MESSAGE', {
-  messageId:   m,
-  description: d
-});
+const addMessage = (m, d) =>
+  createAction ('NABU_ADD_MESSAGE', {
+    messageId: m,
+    description: d,
+  });
 
 const toggleMarker = () => createAction ('NABU_TOGGLE_MARKS', {});
 const toggleTranslatorPanel = () => createAction ('NABU_TOGGLE_TRANSLATOR', {});
 
-const setFocus = (m, v) => createAction ('NABU_SET_FOCUS', {
-  messageId: m,
-  value:     v
-});
+const setFocus = (m, v) =>
+  createAction ('NABU_SET_FOCUS', {
+    messageId: m,
+    value: v,
+  });
 
-const toggleSelectionMode = () => createAction ('NABU_TOGGLE_SELECTION_MODE', {});
+const toggleSelectionMode = () =>
+  createAction ('NABU_TOGGLE_SELECTION_MODE', {});
 
-const setSelectedItem = (m) => createAction ('NABU_SET_SELECTED_ITEM', {
-  messageId: m
-});
+const setSelectedItem = m =>
+  createAction ('NABU_SET_SELECTED_ITEM', {
+    messageId: m,
+  });
 
 const mustTranslate = (locale, messages, msgid) => {
   const mustTranslate = !messages.has (msgid);
@@ -55,7 +64,7 @@ const mustTranslate = (locale, messages, msgid) => {
   return !messages.getIn ([msgid, 'translations', locale]);
 };
 
-const T = (store) => {
+const T = store => {
   return (msgid, values, desc) => {
     const state = store.getState ();
 
@@ -67,7 +76,10 @@ const T = (store) => {
     const marker = state.nabu.get ('marker');
     const markerOn = marker && mustTranslate (locale, messages, msgid);
 
-    const msg = messages.getIn ([msgid, 'translations', locale, 'message'], msgid);
+    const msg = messages.getIn (
+      [msgid, 'translations', locale, 'message'],
+      msgid
+    );
     const formatter = new MessageFormat (locale).compile (msg);
 
     let text = formatter (values);
@@ -81,7 +93,7 @@ const T = (store) => {
 // API
 module.exports = {
   initialState: require ('./initial-state.js'),
-  nabuReducer:  require ('./reducer.js'),
+  nabuReducer: require ('./reducer.js'),
 
   addLocale,
   changeSelectedLocale,
@@ -96,5 +108,5 @@ module.exports = {
   setSelectedItem,
   toggleSelectionMode,
 
-  T
+  T,
 };
