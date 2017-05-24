@@ -42,6 +42,7 @@
     "immutable": "^3.7.6",
     "jsdom": "^8.0.2",
     "mocha": "^2.4.5",
-    "rimraf": "^2.5.1"
+    "rimraf": "^2.5.1",
+    "xcraft-dev-rules": "^0.1.17"
   }
 }
