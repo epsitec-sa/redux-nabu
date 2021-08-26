@@ -1,6 +1,6 @@
 {
   "name": "redux-nabu",
-  "version": "5.0.0",
+  "version": "6.0.0",
   "description": "i18n backend for react-tools",
   "engine": {
     "node": ">=4.0.0"
